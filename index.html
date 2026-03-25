@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-adsense-account" content="ca-pub-9924626824046580">
+    <title>심리/성향 테스트 포털</title>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9924626824046580" crossorigin="anonymous"></script>
+    <!-- Pretendard Font CDN -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        /* [디자인 시스템] 요구사항에 맞춘 CSS 변수 선언 */
+        :root {
+            --color-primary: #81A6C6;      /* 버튼, 주요 강조 텍스트 */
+            --color-secondary: #AACDDC;    /* 호버 효과, 카드 배경 포인트 */
+            --color-bg: #F3E3D0;           /* 전체 바디 배경 */
+            --color-divider: #D2C4B4;      /* 구분선, 보더 라인 */
+            --color-surface: #FFFFFF;      /* 테스트 카드 배경 */
+            --text-main: #333333;          /* 메인 텍스트 */
+            --text-sub: #555555;           /* 서브 텍스트 */
+            --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* 은은한 그라데이션 적용 */
+            background: linear-gradient(135deg, var(--color-bg) 0%, #E9D5BD 100%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* 1. 모바일 앱처럼 보이도록 중앙 배치 및 최대 너비 설정 */
+        #app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: transparent;
+        }
+
+        /* 데스크톱 환경에서는 둥근 모서리와 그림자 효과 적용 */
+        @media (min-width: 481px) {
+            body {
+                align-items: center;
+                padding: 40px 0;
+            }
+            #app-container {
+                min-height: calc(100vh - 80px);
+                background-color: #F8EBE0;
+                border-radius: 24px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+        }
+
+        /* 2. 헤더 섹션 */
+        header {
+            text-align: center;
+            padding: 40px 24px 20px;
+        }
+
+        header h1 {
+            font-size: 1.7rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        .header-image {
+            margin-top: 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header-image img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(129, 166, 198, 0.2);
+            object-fit: cover;
+        }
+
+        /* 4. 애드센스 배치 컨테이너 */
+        .adsense-container {
+            margin: 30px 24px; /* 본문과 혼동되지 않도록 충분한 마진 */
+            width: calc(100% - 48px);
+            min-height: 100px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px dashed var(--color-divider);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* 3. 테스트 리스트 섹션 */
+        .test-list-section {
+            padding: 10px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        /* 카드형 UI 스타일 */
+        .test-card {
+            background-color: var(--color-surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(255,255,255,0.6);
+            cursor: pointer;
+        }
+
+        /* 마우스를 올렸을 때 살짝 위로 떠오르는 애니메이션 */
+        .test-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 28px rgba(129, 166, 198, 0.15);
+            border-color: var(--color-secondary);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            background-color: rgba(170, 205, 220, 0.2); /* 포인트 컬러 활용 */
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: rgba(210, 196, 180, 0.25);
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .test-btn {
+            background-color: var(--color-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            pointer-events: none; /* 클릭은 a 태그 전체에서 처리됨 */
+            transition: background-color 0.2s, color 0.2s;
+            text-align: center;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        /* 카드 호버 시 버튼 스타일 변경 */
+        .test-card:hover .test-btn {
+            background-color: var(--color-secondary);
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 24px;
+            border-top: 1px solid var(--color-divider);
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: var(--text-sub);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        .footer-links .divider {
+            color: var(--color-divider);
+            font-size: 0.8rem;
+        }
+
+        .copyright {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+            word-break: keep-all;
+            opacity: 0.85;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <h1>트렌디 성향 테스트</h1>
+        <p>나를 알아가는 가장 재미있는 방법!<br>다양한 심리/성향 테스트를 통해 숨겨진 나의 진짜 모습을 발견해보세요.</p>
+        <div class="header-image">
+            <img src="images/cover.png" alt="성향 테스트 대표 일러스트" />
+        </div>
+    </header>
+
+    <!-- [애드센스] 메인 배너 (헤더 아래) -->
+    <div class="adsense-container" aria-label="광고 영역">
+        <p>AdSense Banner<br>(Header)</p>
+        <!-- TODO: 실제 구글 애드센스 인피드/디스플레이 광고 스크립트 삽입 위치 -->
+    </div>
+
+    <!-- 테스트 목록 렌더링 영역 (확장성 고려) -->
+    <div class="test-list-section" id="test-list-container">
+        <!-- 자바스크립트로 동적 렌더링 될 위치 -->
+    </div>
+
+    <!-- [애드센스] 하단 배너 (목록 아래) -->
+    <div class="adsense-container" aria-label="광고 영역">
+        <p>AdSense Banner<br>(Footer)</p>
+        <!-- TODO: 실제 구글 애드센스 디스플레이 광고 스크립트 삽입 위치 -->
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">소개 (About)</a>
+            <span class="divider">|</span>
+            <a href="privacy.html">개인정보처리방침 (Privacy Policy)</a>
+            <span class="divider">|</span>
+            <a href="contact.html">문의 (Contact)</a>
+        </div>
+        <p class="copyright">&copy; 2026 트렌디 성향 테스트. All rights reserved.</p>
+        <p class="disclaimer">본 사이트는 구글 애드센스 운영 정책을 준수하며, 사용자에게 유익한 정보성 심리 콘텐츠를 제공합니다.</p>
+    </footer>
+</div>
+
+<!-- [데이터 구조화 및 스크립트] -->
+<script>
+    // 향후 무한히 추가될 수 있는 데이터 (JSON 형태)
+    const testList = [
+      { 
+          id: 1, 
+          title: "나의 오피스 생존 무기 테스트", 
+          desc: "회사라는 전쟁터에서 살아남기 위한 나의 주력 스킬은?", 
+          icon: "💼", 
+          tags: ["#오피스", "#업무성향"], 
+          link: "https://testpage0001.netlify.app/" 
+      },
+      { 
+          id: 2, 
+          title: "직장 내 소통 유형 테스트", 
+          desc: "나와 가장 잘 맞는 업무 스타일과 찰떡 동료 알아보기", 
+          icon: "🤝", 
+          tags: ["#MBTI", "#커뮤니케이션"], 
+          link: "comm-test.html" 
+      },
+      { 
+          id: 3, 
+          title: "내 마음속 '퇴사 요정' 부화 진행도", 
+          desc: "나의 번아웃 지수와 스트레스 레벨 측정하기", 
+          icon: "🧚", 
+          tags: ["#번아웃", "#멘탈케어"], 
+          link: "burnout-test.html" 
+      }
+    ];
+
+    // 테스트 카드를 DOM에 동적으로 생성하는 렌더링 함수
+    function renderTestCards() {
+        const container = document.getElementById('test-list-container');
+        container.innerHTML = ''; // 초기화
+
+        testList.forEach(test => {
+            // 1. 태그 요소 생성
+            const tagsHTML = test.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+
+            // 2. a 태그 래퍼 생성 (카드 전체 클릭 영역화)
+            const card = document.createElement('a');
+            card.href = test.link;
+            card.className = 'test-card';
+            
+            // 3. 카드 내부 HTML 구성
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="card-icon">${test.icon}</div>
+                    <div class="card-title">${test.title}</div>
+                </div>
+                <div class="card-desc">${test.desc}</div>
+                <div class="card-tags">
+                    ${tagsHTML}
+                </div>
+                <!-- a 태그 내부의 버튼(디자인 용도) -->
+                <button class="test-btn" type="button">테스트 하기</button>
+            `;
+
+            // 4. 컨테이너에 추가
+            container.appendChild(card);
+        });
+    }
+
+    // 문서 로드 완료 시 렌더링 함수 실행
+    document.addEventListener('DOMContentLoaded', () => {
+        renderTestCards();
+    });
+</script>
+
+</body>
+</html>
